@@ -1,13 +1,30 @@
-import React from "react";
+import { GoogleAuthProvider } from "firebase/auth";
+import React, { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ListGroup from "react-bootstrap/ListGroup";
+import { AuthContext } from "../../../Context/UserContext";
 
 const RightNav = () => {
+  const { loginWithGoogle } = useContext(AuthContext);
+  const googleProvider = new GoogleAuthProvider();
+  const handleGoogleLogin = () => {
+    loginWithGoogle(googleProvider)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <div>
       <ButtonGroup vertical>
-        <Button variant='outline-primary' className='border rounded mb-2'>
+        <Button
+          onClick={handleGoogleLogin}
+          variant='outline-primary'
+          className='border rounded mb-2'
+        >
           Signin with Google
         </Button>
         <Button variant='outline-dark' className='border rounded mb-2'>
